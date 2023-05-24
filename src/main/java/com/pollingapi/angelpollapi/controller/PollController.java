@@ -36,20 +36,30 @@ public class PollController {
 
     @RequestMapping(value="/polls/{pollId}", method=RequestMethod.GET) // get retrieves data, in this case it retrieves a poll by the pollid
     public ResponseEntity<?> getPoll(@PathVariable Long pollId){
+        verifyPoll(pollId);
         Optional<Poll> p = pollRepository.findById(pollId); //findById method is (Optional<T> findById(ID id);). I need an object of type Optional<Poll> and not just Poll.
         return new ResponseEntity<>(p, HttpStatus.OK);
     }
 
     @RequestMapping(value="/polls/{pollId}", method=RequestMethod.PUT) // put is used to update and puts the new data in
     public ResponseEntity<?> updatePoll(@RequestBody Poll poll, @PathVariable Long pollId){
+        verifyPoll(pollId);
         Poll p = pollRepository.save(poll); // .save needs an entity parameter, which Poll is an entity, so it fits
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value="/polls/{pollId}", method=RequestMethod.DELETE)
     public ResponseEntity<?> deletePoll(@RequestBody Poll poll, @PathVariable Long pollId){
+        verifyPoll(pollId);
         pollRepository.delete(poll);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    protected void verifyPoll(Long pollId) throws ResourceNotFoundException{ // first time using protected access modifier - makes it accessible within the package
+        Optional<Poll> poll = pollRepository.findById(pollId);
+        if(poll == null){ // if the poll given does not exist it will return the message below
+            throw new ResourceNotFoundException("The poll with id " + pollId + " does not exist");
+        }
     }
 
 

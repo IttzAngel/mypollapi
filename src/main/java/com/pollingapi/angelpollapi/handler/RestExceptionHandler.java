@@ -17,7 +17,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@ControllerAdvice
+public class RestExceptionHandler {
 
-public class RestExceptionHandler extends ResponseEntityExceptionHandler {
-
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException rnfe, HttpServletRequest request){
+        ErrorDetail errorDetail = new ErrorDetail();
+        errorDetail.setTimeStamp(new Date().getTime());
+        errorDetail.setStatus(HttpStatus.NOT_FOUND.value());
+        errorDetail.setTitle("Resource not found :( My apologies");
+        errorDetail.setDetail(rnfe.getMessage());
+        errorDetail.setDeveloperMessage(rnfe.getClass().getName());
+        return new ResponseEntity<>(errorDetail, null, HttpStatus.NOT_FOUND);
+    }
 }
