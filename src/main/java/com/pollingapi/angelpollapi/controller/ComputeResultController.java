@@ -30,7 +30,7 @@ public class ComputeResultController {
         for (Vote v : allVotes) {
             totalVotes++;
             OptionCount optionCount = tempMap.get(v.getOption().getId());
-            if (optionCount.equals(null)){
+            if (optionCount == null){ //you cannot use .equals as == compares the memory location/object instance/reference equality check and .equals() checks the content/value of whatever is being tested and checks for equality
                 optionCount = new OptionCount();
                 optionCount.setOptionId(v.getOption().getId());
                 tempMap.put(v.getOption().getId(), optionCount);
