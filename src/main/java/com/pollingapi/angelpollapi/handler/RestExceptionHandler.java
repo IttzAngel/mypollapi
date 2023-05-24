@@ -65,7 +65,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler{
             //errorDetail.getErrors().put(fe.getField(), validationErrorList);
             validationErrorList.add(validationError);
         }
-
         return handleExceptionInternal(manve, errorDetail, headers, status, request);
     }
 
