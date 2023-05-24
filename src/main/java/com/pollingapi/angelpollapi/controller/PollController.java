@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.Optional;
 
@@ -26,12 +27,12 @@ public class PollController {
     }
 
     @RequestMapping(value="/polls", method=RequestMethod.POST) //post submits data
-    public ResponseEntity<?> createPoll(@RequestBody Poll poll){
+    public ResponseEntity<?> createPoll(@Valid @RequestBody Poll poll){
         poll = pollRepository.save(poll);
         HttpHeaders responseHeaders = new HttpHeaders(); //response header is sent by server to client and provides additional information about response, for example content-type header would specify the type of content that the server is sending
         URI newPollUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(poll.getId()).toUri(); //uri is to identify resources that can be accessed over a network, it requires a scheme(http://) and a path(/{id})
         responseHeaders.setLocation(newPollUri);
-        return new ResponseEntity<>(null, HttpStatus.CREATED); //this will replace the path variable with the variable passed in
+        return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED); //this will replace the path variable with the variable passed in
     }
 
     @RequestMapping(value="/polls/{pollId}", method=RequestMethod.GET) // get retrieves data, in this case it retrieves a poll by the pollid
