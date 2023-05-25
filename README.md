@@ -1,0 +1,15 @@
+# Notes
+- HTTP Methods: GET, POST, PUT, DELETE, OPTIONS, HEAD, CONNECT, TRACE
+- get retrieves data
+- post submits data
+- put updates data
+- delete deletes data
+- so far this is all we have used
+- make sure you can handle exceptions when creating an application, unless you would like your application to crash
+- make methods in service class and then call them in controller
+- many to many is a relationship between two entities where many instances of an entity can be associated with many instances of another entity
+- one to many is a relationship between two entities where one instance of an entity can be associated with many instances of another entity
+- on to one is a relationship between two entities where one instance of an entity can only be associated with one instance of the other entity
+- response header is sent by server to client and provides additional information about response, for example content-type header would specify the type of content that the server is sending
+- uri is to identify resources that can be accessed over a network, it requires a scheme(http://) and a path(/{id})
+- in computeresultcontroller: you cannot use .equals as == compares the memory location/object instance/reference equality check and .equals() checks the content/value of whatever is being tested and checks for equality
