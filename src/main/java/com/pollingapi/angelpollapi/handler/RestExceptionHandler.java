@@ -29,6 +29,17 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler{
     @Autowired
     private MessageSource messageSource;
 
+//    @ExceptionHandler(ResourceNotFoundException.class)
+//    public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException rnfe, HttpServletRequest request){
+//        ErrorDetail errorDetail = new ErrorDetail();
+//        errorDetail.setTimeStamp(new Date().getTime());
+//        errorDetail.setStatus(HttpStatus.NOT_FOUND.value());
+//        errorDetail.setTitle("Resource not found take the L");
+//        errorDetail.setDetail(rnfe.getMessage());
+//        errorDetail.setDeveloperMessage(rnfe.getClass().getName());
+//        return new ResponseEntity<>(rnfe, null, HttpStatus.NOT_FOUND);
+//    }
+
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         ErrorDetail errorDetail = new ErrorDetail();

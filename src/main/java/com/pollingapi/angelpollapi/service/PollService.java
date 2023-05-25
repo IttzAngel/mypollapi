@@ -29,10 +29,11 @@ public class PollService {
         return new ResponseEntity<>(allPolls, HttpStatus.OK);
     }
 
-    public ResponseEntity<?> getPoll(Long pollId) {
+    public Optional<Poll> getPoll(Long pollId) {
         verifyPoll(pollId);
-        Optional<Poll> p = pollRepository.findById(pollId); //findById method is (Optional<T> findById(ID id);). I need an object of type Optional<Poll> and not just Poll.
-        return new ResponseEntity<>(p, HttpStatus.OK);
+        //Optional<Poll> p = pollRepository.findById(pollId); //findById method is (Optional<T> findById(ID id);). I need an object of type Optional<Poll> and not just Poll.
+        return pollRepository.findById(pollId);
+        //return new ResponseEntity<>(p, HttpStatus.OK);
     }
 
     public ResponseEntity<?> createPoll(Poll poll){
@@ -57,7 +58,7 @@ public class PollService {
 
     protected void verifyPoll(Long pollId) throws ResourceNotFoundException {
         Optional<Poll> poll = pollRepository.findById(pollId);
-        if(poll == null){ // if the poll given does not exist it will return the message below
+        if(poll.isEmpty()){ // if the poll given does not exist it will return the message below
             throw new ResourceNotFoundException("The poll with id " + pollId + " does not exist");
         }
     }

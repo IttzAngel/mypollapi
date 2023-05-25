@@ -63,11 +63,11 @@ public class ErrorDetail {
 
     @Override
     public String toString() {
-        return "ErrorDetail{" +
-                "title='" + title + '\'' +
-                ", status=" + status +
-                ", detail='" + detail + '\'' +
-                ", timeStamp=" + timeStamp +
+        return '\n' + "ErrorDetail{" + '\n' +
+                "title='" + title + '\n' +
+                ", status=" + status + '\n' +
+                ", detail='" + detail + '\n' +
+                ", timeStamp=" + timeStamp + '\n' +
                 ", developerMessage='" + developerMessage + '\'' +
                 '}';
     }

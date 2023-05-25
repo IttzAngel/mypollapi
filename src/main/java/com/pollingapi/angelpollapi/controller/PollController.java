@@ -28,7 +28,7 @@ public class PollController {
     }
 
     @RequestMapping(value="/polls/{pollId}", method=RequestMethod.GET) // get retrieves data, in this case it retrieves a poll by the pollid
-    public ResponseEntity<?> getPoll(@PathVariable Long pollId){
+    public Optional<Poll> getPoll(@PathVariable Long pollId){
         return pollService.getPoll(pollId);
     }
 
@@ -46,8 +46,4 @@ public class PollController {
     public ResponseEntity<?> deletePoll(@RequestBody Poll poll, @PathVariable Long pollId){
         return pollService.deletePoll(poll, pollId);
     }
-
-
-
-
 }
