@@ -55,7 +55,7 @@ public class PollService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public void verifyPoll(Long pollId) throws ResourceNotFoundException {
+    protected void verifyPoll(Long pollId) throws ResourceNotFoundException {
         Optional<Poll> poll = pollRepository.findById(pollId);
         if(poll == null){ // if the poll given does not exist it will return the message below
             throw new ResourceNotFoundException("The poll with id " + pollId + " does not exist");
