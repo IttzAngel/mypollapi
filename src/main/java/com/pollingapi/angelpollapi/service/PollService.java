@@ -50,7 +50,7 @@ public class PollService {
         return new ResponseEntity<>(p, HttpStatus.OK);
     }
 
-    public ResponseEntity<?> deletePoll(Poll poll, Long pollId){
+    public ResponseEntity<?> deletePoll(Long pollId){
         verifyPoll(pollId);
         pollRepository.deleteById(pollId);
         return new ResponseEntity<>(HttpStatus.OK);
