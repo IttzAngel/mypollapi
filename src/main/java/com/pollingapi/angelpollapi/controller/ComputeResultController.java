@@ -7,10 +7,7 @@ import com.pollingapi.angelpollapi.repositories.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,9 +23,9 @@ public class ComputeResultController {
         VoteResult voteResult = new VoteResult();
         Iterable<Vote> allVotes = voteRepository.findByPoll(pollId);
         int totalVotes = 0;
-        Map<Long, OptionCount> tempMap = new HashMap<Long, OptionCount>();
+        Map<Long, OptionCount> tempMap = new HashMap<>();
         for (Vote v : allVotes) {
-            totalVotes++;
+            totalVotes ++;
             OptionCount optionCount = tempMap.get(v.getOption().getId());
             if (optionCount == null){ //you cannot use .equals as == compares the memory location/object instance/reference equality check and .equals() checks the content/value of whatever is being tested and checks for equality
                 optionCount = new OptionCount();

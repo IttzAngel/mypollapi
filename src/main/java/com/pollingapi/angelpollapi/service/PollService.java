@@ -52,7 +52,7 @@ public class PollService {
 
     public ResponseEntity<?> deletePoll(Poll poll, Long pollId){
         verifyPoll(pollId);
-        pollRepository.delete(poll);
+        pollRepository.deleteById(pollId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
