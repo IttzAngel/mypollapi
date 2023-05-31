@@ -2,8 +2,11 @@ package com.pollingapi.angelpollapi.service;
 
 import com.pollingapi.angelpollapi.domain.Option;
 import com.pollingapi.angelpollapi.domain.Poll;
+import com.pollingapi.angelpollapi.domain.Vote;
 import com.pollingapi.angelpollapi.exception.ResourceNotFoundException;
+import com.pollingapi.angelpollapi.repositories.OptionRepository;
 import com.pollingapi.angelpollapi.repositories.PollRepository;
+import com.pollingapi.angelpollapi.repositories.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,6 +26,12 @@ public class PollService {
 
     @Autowired
     private PollRepository pollRepository;
+
+    @Autowired
+    private VoteRepository voteRepository;
+
+    @Autowired
+    private OptionRepository optionRepository;
 
     public ResponseEntity<Iterable<Poll>> getAllPolls(){
         Iterable<Poll> allPolls = pollRepository.findAll();
@@ -52,8 +61,18 @@ public class PollService {
 
     public ResponseEntity<?> deletePoll(Long pollId){
         verifyPoll(pollId);
+
+        // Delete votes and options associated with the poll
+        Iterable<Vote> votes = voteRepository.findByPoll(pollId);
+        voteRepository.deleteAll(votes);
+
+        Iterable<Option> options = optionRepository.findByPoll(pollId); // Assuming you have defined this method in your OptionRepository
+        optionRepository.deleteAll(options);
+
+        // Delete the poll itself
         pollRepository.deleteById(pollId);
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        return ResponseEntity.noContent().build();
     }
 
     protected void verifyPoll(Long pollId) throws ResourceNotFoundException {
